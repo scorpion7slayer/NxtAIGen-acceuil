@@ -27,10 +27,10 @@ const iconMap: Record<string, Parameters<typeof FontAwesomeIcon>[0]["icon"]> = {
 
 interface ProjectCardProps {
   project: Project;
-  priority?: boolean;
+  eager?: boolean;
 }
 
-export function ProjectCard({ project, priority = false }: ProjectCardProps) {
+export function ProjectCard({ project, eager = false }: ProjectCardProps) {
   const [installOpen, setInstallOpen] = useState(false);
   const { lang, t } = useLang();
   const icon = iconMap[project.id] ?? faWandMagicSparkles;
@@ -45,8 +45,7 @@ export function ProjectCard({ project, priority = false }: ProjectCardProps) {
             src={project.screenshot}
             alt={`Screenshot of ${project.name}`}
             fill
-            priority={priority}
-            loading={priority ? "eager" : "lazy"}
+            loading={eager ? "eager" : "lazy"}
             className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
             sizes="(max-width: 768px) 100vw, 50vw"
           />

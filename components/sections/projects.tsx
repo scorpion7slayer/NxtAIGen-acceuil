@@ -15,7 +15,7 @@ export function ProjectsSection() {
               className="animate-fade-in-up"
               style={{ animationDelay: `${240 + i * 80}ms` }}
             >
-              <ProjectCard project={project} priority={i === 0} />
+              <ProjectCard project={project} eager={i === 0} />
             </div>
           ))}
         </div>
