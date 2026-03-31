@@ -29,6 +29,11 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <script
+          src="https://analyticstheo.serverscorpion1601.site/api/script.js"
+          data-site-id="a7fe3380d169"
+          defer
+        ></script>
       </head>
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
