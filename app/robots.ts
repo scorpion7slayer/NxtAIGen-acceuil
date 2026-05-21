@@ -8,6 +8,9 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://nxtaigen.com/sitemap.xml",
+    sitemap: [
+      "https://nxtaigen.com/sitemap.xml",
+      "https://theo.nxtaigen.com/sitemap.xml",
+    ],
   };
 }

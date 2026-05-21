@@ -4,6 +4,7 @@ export const translations = {
   fr: {
     nav: {
       projects: "Projets",
+      portfolio: "Portfolio",
       github: "GitHub",
     },
     hero: {
@@ -32,6 +33,7 @@ export const translations = {
   en: {
     nav: {
       projects: "Projects",
+      portfolio: "Portfolio",
       github: "GitHub",
     },
     hero: {

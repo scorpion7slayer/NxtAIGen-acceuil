@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faUser, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { Container } from "@/components/layout/container";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
@@ -31,6 +31,13 @@ export function Navbar() {
           <LangToggle />
           <ThemeToggle />
           <a
+            href="https://theo.nxtaigen.com/"
+            className="hidden md:inline-flex items-center gap-2 text-sm font-semibold ml-1 px-4 py-2 rounded-[10px] text-foreground-muted hover:text-foreground hover:bg-background-secondary transition-colors duration-200"
+          >
+            <FontAwesomeIcon icon={faUser} className="w-4 h-4" />
+            {t.nav.portfolio}
+          </a>
+          <a
             href="https://github.com/scorpion7slayer"
             target="_blank"
             rel="noopener noreferrer"
@@ -57,6 +64,13 @@ export function Navbar() {
         )}
       >
         <Container className="py-4 flex flex-col gap-1">
+          <a
+            href="https://theo.nxtaigen.com/"
+            className="flex items-center justify-center gap-2 text-sm font-semibold px-4 py-2.5 rounded-[10px] text-foreground-muted hover:text-foreground hover:bg-background-secondary text-center transition-colors duration-200"
+          >
+            <FontAwesomeIcon icon={faUser} className="w-4 h-4" />
+            {t.nav.portfolio}
+          </a>
           <a
             href="https://github.com/scorpion7slayer"
             target="_blank"
