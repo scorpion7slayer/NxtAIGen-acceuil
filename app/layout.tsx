@@ -8,14 +8,19 @@ import { LangProvider } from "@/components/shared/lang-provider";
 config.autoAddCss = false;
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://nxtaigen.com"),
   title: "NxtAIGen — AI-Powered Dev Tools",
   description:
     "Découvrez l'écosystème NxtAIGen : des outils open source propulsés par l'IA pour les développeurs modernes.",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "NxtAIGen — AI-Powered Dev Tools",
     description:
       "Découvrez l'écosystème NxtAIGen : des outils open source propulsés par l'IA pour les développeurs modernes.",
     type: "website",
+    url: "/",
   },
 };
 

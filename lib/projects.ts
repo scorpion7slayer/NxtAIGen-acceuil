@@ -34,15 +34,15 @@ export const projects: Project[] = [
   },
   {
     id: "nxtaicard",
-    name: "NxtAICard",
+    name: "BenchSift",
     description: {
-      fr: "Dashboard comparant des centaines de modèles IA côte à côte : benchmarks, prix et vitesse actualisés en temps réel.",
-      en: "Dashboard comparing hundreds of AI models side by side: benchmarks, pricing and speed updated in real time.",
+      fr: "Catalogue comparant des centaines de modèles IA côte à côte : benchmarks, prix et vitesse actualisés en temps réel.",
+      en: "Catalog comparing hundreds of AI models side by side: benchmarks, pricing and speed updated in real time.",
     },
     screenshot: "/screenshots/NxtAICard.webp",
-    tags: ["Next.js", "TypeScript", "shadcn/ui"],
-    href: "https://nxtaicard.nxtaigen.com/",
-    github: "https://github.com/scorpion7slayer/nxtaicard",
+    tags: ["TanStack Start", "TypeScript", "shadcn/ui"],
+    href: "https://benchsift.nxtaigen.com/",
+    github: "https://github.com/scorpion7slayer/benchsift",
   },
   {
     id: "nxtupdate",
