@@ -35,8 +35,8 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <script
-          src="https://analyticstheo.serverscorpion1601.site/api/script.js"
-          data-site-id="a7fe3380d169"
+          src="https://rybbit.nxtaigen.com/api/script.js"
+          data-site-id="ae2c3c3258dd"
           defer
         ></script>
       </head>
