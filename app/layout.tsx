@@ -1,24 +1,38 @@
 import type { Metadata } from "next";
+import { Archivo, Azeret_Mono } from "next/font/google";
 import "./globals.css";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { ThemeProvider } from "@/components/theme-provider";
 import { LangProvider } from "@/components/shared/lang-provider";
+import { translations } from "@/lib/i18n";
 
 config.autoAddCss = false;
 
+const archivo = Archivo({
+  subsets: ["latin"],
+  variable: "--font-archivo",
+  display: "swap",
+});
+
+const azeretMono = Azeret_Mono({
+  subsets: ["latin"],
+  variable: "--font-azeret-mono",
+  display: "swap",
+});
+
+const defaultMeta = translations.fr.meta;
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://nxtaigen.com"),
-  title: "NxtAIGen — AI-Powered Dev Tools",
-  description:
-    "Découvrez l'écosystème NxtAIGen : des outils open source propulsés par l'IA pour les développeurs modernes.",
+  title: defaultMeta.title,
+  description: defaultMeta.description,
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "NxtAIGen — AI-Powered Dev Tools",
-    description:
-      "Découvrez l'écosystème NxtAIGen : des outils open source propulsés par l'IA pour les développeurs modernes.",
+    title: defaultMeta.title,
+    description: defaultMeta.description,
     type: "website",
     url: "/",
   },
@@ -30,17 +44,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" suppressHydrationWarning className="h-full antialiased">
+    <html
+      lang="fr"
+      suppressHydrationWarning
+      className={`${archivo.variable} ${azeretMono.variable} h-full antialiased`}
+    >
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <script
           src="https://rybbit.nxtaigen.com/api/script.js"
           data-site-id="ae2c3c3258dd"
           defer
         ></script>
       </head>
-      <body className="min-h-full flex flex-col" suppressHydrationWarning>
+      <body className="min-h-full bg-background text-foreground" suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <LangProvider>{children}</LangProvider>
         </ThemeProvider>

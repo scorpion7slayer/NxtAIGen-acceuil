@@ -6,7 +6,7 @@ export function ContentWrapper({ children }: { children: React.ReactNode }) {
   const { contentRef } = useLang();
 
   return (
-    <div ref={contentRef} className="pt-16 flex-1">
+    <div ref={contentRef} className="flex-1 pt-18">
       {children}
     </div>
   );

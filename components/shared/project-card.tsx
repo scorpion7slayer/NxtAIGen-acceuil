@@ -1,13 +1,10 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { useState } from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCodeBranch,
-  faTableCells,
-  faRotate,
-  faWandMagicSparkles,
   faArrowUpRightFromSquare,
   faDownload,
   faPlay,
@@ -16,100 +13,143 @@ import {
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { InstallModal } from "@/components/shared/install-modal";
 import { useLang } from "@/components/shared/lang-provider";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import type { Project } from "@/lib/projects";
-
-const iconMap: Record<string, Parameters<typeof FontAwesomeIcon>[0]["icon"]> = {
-  nxtgit: faCodeBranch,
-  nxtaicard: faTableCells,
-  nxtupdate: faRotate,
-  nxtaigen: faWandMagicSparkles,
-};
 
 interface ProjectCardProps {
   project: Project;
-  eager?: boolean;
+  index: number;
 }
 
-export function ProjectCard({ project, eager = false }: ProjectCardProps) {
+type ProjectStyle = CSSProperties & {
+  "--project-accent": string;
+};
+
+export function ProjectCard({ project, index }: ProjectCardProps) {
   const [installOpen, setInstallOpen] = useState(false);
   const { lang, t } = useLang();
-  const icon = iconMap[project.id] ?? faWandMagicSparkles;
+  const reverse = index % 2 === 1;
+  const style: ProjectStyle = { "--project-accent": project.accent };
 
   return (
     <>
-      {/* Wrapper fixe : zone hover stable qui ne bouge jamais */}
-      <article className="flex flex-col bg-background-card border border-border rounded-2xl overflow-hidden group hover:border-border-hover hover:shadow-[var(--shadow-hover)] transition-[box-shadow,border-color] duration-300 ease">
-        {/* Screenshot */}
-        <div className="relative w-full aspect-video overflow-hidden bg-background-secondary">
-          <Image
-            src={project.screenshot}
-            alt={`Screenshot of ${project.name}`}
-            fill
-            loading={eager ? "eager" : "lazy"}
-            className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
-            sizes="(max-width: 768px) 100vw, 50vw"
-          />
+      <article
+        className="grid items-center gap-9 border-t border-border py-12 md:py-16 lg:grid-cols-12 lg:gap-14 lg:py-20"
+        style={style}
+      >
+        <div
+          className={cn(
+            "lg:col-span-7",
+            reverse && "lg:order-2"
+          )}
+        >
+          <div className="group overflow-hidden rounded-xl bg-surface ring-1 ring-border transition-colors duration-300 hover:ring-border-strong">
+            <div className="flex h-11 items-center justify-between border-b border-border bg-surface px-4">
+              <div className="flex items-center gap-2">
+                <span
+                  className="size-2 rounded-full"
+                  style={{ backgroundColor: "var(--project-accent)" }}
+                  aria-hidden="true"
+                />
+                <span className="font-mono text-xs text-foreground-muted">
+                  {project.name}
+                </span>
+              </div>
+              <span className="hidden font-mono text-xs text-foreground-muted sm:inline">
+                {project.category[lang]}
+              </span>
+            </div>
+
+            <div className="relative aspect-[16/10] overflow-hidden bg-surface-deep">
+              <Image
+                src={project.screenshot}
+                alt={
+                  lang === "fr"
+                    ? `Aperçu du projet ${project.name}`
+                    : `Preview of the ${project.name} project`
+                }
+                fill
+                loading="lazy"
+                className={cn(
+                  "object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.015]",
+                  project.id === "nxtupdate" &&
+                    "origin-top-left scale-[1.7] group-hover:scale-[1.72]",
+                  project.id === "nxtaicard" && "scale-[1.04] object-[center_18%] group-hover:scale-[1.055]"
+                )}
+                sizes="(max-width: 1024px) 100vw, 58vw"
+              />
+            </div>
+          </div>
         </div>
 
-        {/* Content */}
-        <div className="flex flex-col gap-4 p-6">
-          {/* Icon + Name */}
-          <div className="flex items-center gap-3">
-            <div className="flex items-center justify-center w-9 h-9 rounded-[10px] bg-accent-subtle flex-shrink-0">
-              <FontAwesomeIcon icon={icon} className="w-4 h-4 text-accent" />
-            </div>
-            <h3 className="text-base font-semibold text-foreground">{project.name}</h3>
-          </div>
+        <div
+          className={cn(
+            "flex flex-col items-start lg:col-span-5",
+            reverse && "lg:order-1"
+          )}
+        >
+          <Badge variant="outline">{project.category[lang]}</Badge>
 
-          {/* Description */}
-          <p className="text-sm text-foreground-muted leading-relaxed flex-1">
+          <h3 className="mt-5 text-[clamp(2.35rem,5vw,4.5rem)] font-extrabold leading-none tracking-[-0.035em] text-balance">
+            {project.name}
+          </h3>
+
+          <p className="mt-5 max-w-[56ch] text-base leading-7 text-foreground-muted text-pretty sm:text-lg sm:leading-8">
             {project.description[lang]}
           </p>
 
-          {/* Tags */}
-          <div className="flex flex-wrap gap-1.5">
+          <div className="mt-6 flex flex-wrap gap-2">
             {project.tags.map((tag) => (
-              <span key={tag} className="text-xs px-2.5 py-1 rounded-full bg-tag-bg text-tag-text">
+              <Badge key={tag} variant="secondary">
                 {tag}
-              </span>
+              </Badge>
             ))}
           </div>
 
-          {/* Links */}
-          <div className="flex items-center flex-wrap gap-3 pt-1 border-t border-border">
-            {/* Primary action */}
+          <div className="mt-8 flex flex-wrap items-center gap-3">
             {project.href ? (
-              <a
-                href={project.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 text-sm font-semibold text-accent hover:text-accent-hover transition-colors duration-200"
-              >
-                {t.card.visit}
-                <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="w-3.5 h-3.5" />
-              </a>
+              <Button asChild>
+                <a href={project.href} target="_blank" rel="noopener noreferrer">
+                  {t.card.visit}
+                  <FontAwesomeIcon
+                    icon={faArrowUpRightFromSquare}
+                    data-icon="inline-end"
+                  />
+                </a>
+              </Button>
             ) : project.install ? (
-              <button
-                onClick={() => setInstallOpen(true)}
-                className="flex items-center gap-1.5 text-sm font-semibold text-accent hover:text-accent-hover transition-colors duration-200"
-              >
-                <FontAwesomeIcon icon={faTerminal} className="w-3.5 h-3.5" />
+              <Button onClick={() => setInstallOpen(true)}>
+                <FontAwesomeIcon icon={faTerminal} data-icon="inline-start" />
                 {t.card.install}
-              </button>
+              </Button>
             ) : (
-              <span className="text-sm text-foreground-muted italic">{t.card.comingSoon}</span>
+              <Badge variant="secondary">{t.card.comingSoon}</Badge>
             )}
 
-            {/* Secondary links with labels */}
-            <div className="flex items-center gap-4 ml-auto">
+            <Button asChild variant="outline">
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon icon={faGithub} data-icon="inline-start" />
+                {t.card.github}
+              </a>
+            </Button>
+          </div>
+
+          {(project.releases || project.demo) && (
+            <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm font-medium">
               {project.releases && (
                 <a
                   href={project.releases}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 text-sm text-foreground-muted hover:text-foreground transition-colors duration-200"
+                  className="inline-flex items-center gap-2 text-foreground-muted transition-colors hover:text-foreground"
                 >
-                  <FontAwesomeIcon icon={faDownload} className="w-4 h-4" />
+                  <FontAwesomeIcon icon={faDownload} className="size-3.5" />
                   {t.card.download}
                 </a>
               )}
@@ -118,23 +158,14 @@ export function ProjectCard({ project, eager = false }: ProjectCardProps) {
                   href={project.demo}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 text-sm text-foreground-muted hover:text-foreground transition-colors duration-200"
+                  className="inline-flex items-center gap-2 text-foreground-muted transition-colors hover:text-foreground"
                 >
-                  <FontAwesomeIcon icon={faPlay} className="w-4 h-4" />
+                  <FontAwesomeIcon icon={faPlay} className="size-3.5" />
                   {t.card.demo}
                 </a>
               )}
-              <a
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 text-sm text-foreground-muted hover:text-foreground transition-colors duration-200"
-              >
-                <FontAwesomeIcon icon={faGithub} className="w-5 h-5" />
-                {t.card.github}
-              </a>
             </div>
-          </div>
+          )}
         </div>
       </article>
 

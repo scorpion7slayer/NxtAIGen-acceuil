@@ -1,17 +1,20 @@
 "use client";
 
 import { useLang } from "@/components/shared/lang-provider";
+import { Button } from "@/components/ui/button";
 
 export function LangToggle() {
   const { lang, toggle } = useLang();
 
   return (
-    <button
+    <Button
+      type="button"
+      size="icon"
+      variant="ghost"
       onClick={toggle}
-      aria-label="Toggle language"
-      className="flex items-center justify-center h-9 px-2.5 rounded-[10px] text-xs font-semibold text-foreground-muted hover:text-foreground hover:bg-background-secondary transition-colors duration-200 cursor-pointer tracking-wide"
+      aria-label={lang === "fr" ? "Switch to English" : "Passer en français"}
     >
-      {lang === "fr" ? "EN" : "FR"}
-    </button>
+      <span className="font-mono text-[0.68rem]">{lang === "fr" ? "EN" : "FR"}</span>
+    </Button>
   );
 }

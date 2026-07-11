@@ -1,43 +1,73 @@
 "use client";
 
+import { useRef, useSyncExternalStore } from "react";
 import { useTheme } from "next-themes";
-import { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleHalfStroke,
+  faMoon,
+  faSun,
+} from "@fortawesome/free-solid-svg-icons";
+import { useLang } from "@/components/shared/lang-provider";
+import { Button } from "@/components/ui/button";
+
+function subscribeToHydration() {
+  return () => {};
+}
+
+function getClientHydrationSnapshot() {
+  return true;
+}
+
+function getServerHydrationSnapshot() {
+  return false;
+}
 
 export function ThemeToggle() {
-  const [mounted, setMounted] = useState(false);
+  const { lang } = useLang();
   const { resolvedTheme, setTheme } = useTheme();
   const iconRef = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => setMounted(true), []);
+  const hydrated = useSyncExternalStore(
+    subscribeToHydration,
+    getClientHydrationSnapshot,
+    getServerHydrationSnapshot
+  );
+  const isDark = resolvedTheme === "dark";
+  const icon = hydrated ? (isDark ? faSun : faMoon) : faCircleHalfStroke;
+  const label = hydrated
+    ? lang === "fr"
+      ? isDark
+        ? "Passer au thème clair"
+        : "Passer au thème sombre"
+      : isDark
+        ? "Switch to light theme"
+        : "Switch to dark theme"
+    : lang === "fr"
+      ? "Changer de thème"
+      : "Change theme";
 
   function handleToggle() {
     const icon = iconRef.current;
     if (icon) {
       icon.classList.remove("animate-spin-once");
-      void icon.offsetWidth; // force reflow to restart animation
+      void icon.offsetWidth;
       icon.classList.add("animate-spin-once");
     }
-    setTimeout(() => {
-      setTheme(resolvedTheme === "dark" ? "light" : "dark");
-    }, 225);
+    setTheme(isDark ? "light" : "dark");
   }
 
-  if (!mounted) return <div className="w-9 h-9" />;
-
   return (
-    <button
+    <Button
+      type="button"
+      size="icon"
+      variant="ghost"
       onClick={handleToggle}
-      aria-label="Toggle theme"
-      className="flex items-center justify-center w-9 h-9 rounded-[10px] text-foreground-muted hover:text-foreground hover:bg-background-secondary transition-colors duration-200 cursor-pointer"
+      aria-pressed={hydrated ? isDark : undefined}
+      aria-label={label}
     >
       <span ref={iconRef} className="inline-flex items-center justify-center">
-        <FontAwesomeIcon
-          icon={resolvedTheme === "dark" ? faSun : faMoon}
-          className="w-4 h-4"
-        />
+        <FontAwesomeIcon icon={icon} />
       </span>
-    </button>
+    </Button>
   );
 }

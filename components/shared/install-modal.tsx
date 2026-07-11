@@ -2,45 +2,56 @@
 
 import { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark, faCopy, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faCopy, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useLang } from "@/components/shared/lang-provider";
+import { Button } from "@/components/ui/button";
 import type { InstallSteps } from "@/lib/projects";
 
 function CopyButton({ text }: { text: string }) {
+  const { t } = useLang();
   const [copied, setCopied] = useState(false);
-  const btnRef = useRef<HTMLButtonElement>(null);
+  const timeoutRef = useRef<number | null>(null);
 
-  function copy() {
-    navigator.clipboard.writeText(text);
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current !== null) {
+        window.clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
+  async function copy() {
+    await navigator.clipboard.writeText(text);
     setCopied(true);
-    const btn = btnRef.current;
-    if (btn) {
-      btn.classList.remove("animate-spin-once");
-      void btn.offsetWidth;
-      btn.classList.add("animate-spin-once");
+
+    if (timeoutRef.current !== null) {
+      window.clearTimeout(timeoutRef.current);
     }
-    setTimeout(() => setCopied(false), 1500);
+    timeoutRef.current = window.setTimeout(() => {
+      setCopied(false);
+      timeoutRef.current = null;
+    }, 1600);
   }
 
   return (
-    <button
-      ref={btnRef}
+    <Button
+      type="button"
+      size="icon"
+      variant="ghost"
       onClick={copy}
-      aria-label="Copier"
-      className="flex-shrink-0 p-1 rounded text-foreground-muted hover:text-foreground transition-colors duration-150"
+      aria-label={copied ? t.card.copied : t.card.copy}
     >
-      <FontAwesomeIcon
-        icon={copied ? faCheck : faCopy}
-        className={`w-3.5 h-3.5 ${copied ? "text-accent" : ""}`}
-      />
-    </button>
+      <FontAwesomeIcon icon={copied ? faCheck : faCopy} />
+    </Button>
   );
 }
 
 function CodeLine({ code }: { code: string }) {
   return (
-    <div className="flex items-center justify-between gap-2 bg-background rounded-[6px] px-3 py-2.5 font-mono text-sm text-foreground border border-border">
-      <span className="truncate">{code}</span>
+    <div className="flex min-w-0 items-center gap-2 rounded-md bg-surface-deep py-1 pl-3 pr-1 ring-1 ring-border">
+      <code className="min-w-0 flex-1 overflow-x-auto py-2 font-mono text-xs text-foreground sm:text-sm">
+        {code}
+      </code>
       <CopyButton text={code} />
     </div>
   );
@@ -54,76 +65,86 @@ interface InstallModalProps {
 
 export function InstallModal({ open, onClose, install }: InstallModalProps) {
   const { t } = useLang();
-  const [visible, setVisible] = useState(false);
-  const [closing, setClosing] = useState(false);
+  const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
-    if (open) {
-      setClosing(false);
-      setVisible(true);
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    if (open && !dialog.open) {
+      dialog.showModal();
+    } else if (!open && dialog.open) {
+      dialog.close();
     }
   }, [open]);
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [open]);
-
-  function handleClose() {
-    setClosing(true);
-    setTimeout(() => {
-      setVisible(false);
-      setClosing(false);
-      onClose();
-    }, 360);
-  }
-
-  useEffect(() => {
     if (!open) return;
-    function onKey(e: KeyboardEvent) { if (e.key === "Escape") handleClose(); }
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open]);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
 
-  if (!visible) return null;
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [open]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true">
-      {/* Backdrop */}
-      <div
-        className={`absolute inset-0 bg-black/60 backdrop-blur-sm ${closing ? "animate-backdrop-out" : "animate-backdrop-in"}`}
-        onClick={handleClose}
-      />
-
-      {/* Panel */}
-      <div
-        className={`relative w-full max-w-md bg-background-card border border-border rounded-2xl p-6 shadow-2xl ${closing ? "animate-modal-out" : "animate-modal-in"}`}
-      >
-        {/* Header */}
-        <div className="flex items-center justify-between mb-5">
-          <h2 className="text-base font-semibold text-foreground">{t.card.installTitle}</h2>
-          <button
-            onClick={handleClose}
-            className="flex items-center justify-center w-8 h-8 rounded-[8px] text-foreground-muted hover:text-foreground hover:bg-background-secondary transition-all duration-150"
+    <dialog
+      ref={dialogRef}
+      className="animate-modal-in m-auto w-[min(92vw,34rem)] rounded-xl bg-surface p-0 text-foreground ring-1 ring-border backdrop:bg-black/70 backdrop:backdrop-blur-sm"
+      aria-labelledby="install-modal-title"
+      onCancel={(event) => {
+        event.preventDefault();
+        onClose();
+      }}
+      onClick={(event) => {
+        if (event.target === event.currentTarget) onClose();
+      }}
+    >
+      <div className="p-5 sm:p-7">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="font-mono text-xs text-foreground-muted">NxtUpdate</p>
+            <h2
+              id="install-modal-title"
+              className="mt-2 text-2xl font-bold tracking-[-0.025em]"
+            >
+              {t.card.installTitle}
+            </h2>
+          </div>
+          <Button
+            type="button"
+            size="icon"
+            variant="ghost"
+            onClick={onClose}
+            aria-label={t.card.close}
           >
-            <FontAwesomeIcon icon={faXmark} className="w-4 h-4" />
-          </button>
+            <FontAwesomeIcon icon={faXmark} />
+          </Button>
         </div>
 
-        {/* Steps */}
-        <div className="flex flex-col gap-3">
-          <p className="text-xs font-semibold text-foreground-muted uppercase tracking-wide">{t.card.step1}</p>
-          <CodeLine code={install.step1} />
-          <p className="text-xs font-semibold text-foreground-muted uppercase tracking-wide mt-1">{t.card.step2}</p>
-          <CodeLine code={install.step2a} />
-          <div className="flex items-center gap-3 text-xs text-foreground-muted">
-            <div className="flex-1 h-px bg-border" />
-            {t.card.or}
-            <div className="flex-1 h-px bg-border" />
+        <div className="mt-7 flex flex-col gap-4">
+          <div>
+            <p className="mb-2 font-mono text-xs font-semibold text-foreground-muted">
+              {t.card.step1}
+            </p>
+            <CodeLine code={install.step1} />
           </div>
-          <CodeLine code={install.step2b} />
+
+          <div>
+            <p className="mb-2 font-mono text-xs font-semibold text-foreground-muted">
+              {t.card.step2}
+            </p>
+            <CodeLine code={install.step2a} />
+            <div className="my-3 flex items-center gap-3 font-mono text-xs text-foreground-muted">
+              <span className="h-px flex-1 bg-border" aria-hidden="true" />
+              {t.card.or}
+              <span className="h-px flex-1 bg-border" aria-hidden="true" />
+            </div>
+            <CodeLine code={install.step2b} />
+          </div>
         </div>
       </div>
-    </div>
+    </dialog>
   );
 }
