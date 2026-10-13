@@ -7,9 +7,9 @@ un développeur indépendant et renvoie vers leurs sous-domaines.
 
 - HTML, CSS et JavaScript natifs. Aucun framework, aucune bibliothèque, aucune
   dépendance npm. Ne pas en ajouter.
-- Le site vit dans `site/`. Ce qui s'y trouve est publié tel quel.
+- Le site vit dans `site/`. Cloudflare Pages publie ce dossier tel quel, sans
+  étape de build (commande de build vide, dossier de sortie `site`).
 - `npm run dev` lance un serveur local (`scripts/serve.mjs`, Node seul).
-- `npm run build` copie `site/` vers `out/`, le dossier publié par Cloudflare Pages.
 
 ## Structure
 
@@ -21,7 +21,7 @@ site/
   404.html        page d'erreur
   robots.txt, sitemap.xml
   screenshots/    captures WebP en 800 et 1600 px de large (ratio 16:10)
-scripts/          build et serveur local
+scripts/          serveur local
 ```
 
 ## Règles

@@ -21,11 +21,11 @@ Ouvre `http://localhost:3000`. Les fichiers du site sont dans `site/`.
 
 ## Publication
 
-```sh
-npm run build
-```
+Cloudflare Pages publie le dossier `site/` tel quel, sans étape de build :
 
-Copie `site/` vers `out/`, le dossier publié par Cloudflare Pages.
+- Framework preset : None
+- Build command : (vide)
+- Build output directory : `site`
 
 ## Licence
 
