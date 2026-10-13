@@ -1,63 +1,55 @@
-<!-- BEGIN:nextjs-agent-rules -->
-# This is NOT the Next.js you know
+# NxtAIGen — nxtaigen.com
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
-<!-- END:nextjs-agent-rules -->
-## Workflow Orchestration
+Page d'accueil de NxtAIGen : elle présente les outils open source publiés par
+un développeur indépendant et renvoie vers leurs sous-domaines.
 
-### 1. Plan Node Default
+## Stack
 
-- Enter plan mode for ANY non-trivial task (3+ steps or architectural decisions)
-- If something goes sideways, STOP and re-plan immediately — don't keep pushing
-- Use plan mode for verification steps, not just building
-- Write detailed specs upfront to reduce ambiguity
+- HTML, CSS et JavaScript natifs. Aucun framework, aucune bibliothèque, aucune
+  dépendance npm. Ne pas en ajouter.
+- Le site vit dans `site/`. Cloudflare Pages publie ce dossier tel quel, sans
+  étape de build (commande de build vide, dossier de sortie `site`).
+- `npm run dev` lance un serveur local (`scripts/serve.mjs`, Node seul).
 
-### 2. Subagent Strategy
+## Structure
 
-- Use subagents liberally to keep main context window clean
-- Offload research, exploration, and parallel analysis to subagents
-- For complex problems, throw more compute at it via subagents
-- One task per subagent for focused execution
+```
+site/
+  index.html      page unique, tout le contenu est dans le HTML
+  styles.css      toute la mise en forme, tokens de couleur sur :root
+  main.js         uniquement le bouton de thème
+  404.html        page d'erreur
+  robots.txt, sitemap.xml
+  screenshots/    captures WebP en 800 et 1600 px de large (ratio 16:10)
+scripts/          serveur local
+```
 
-### 3. Self-Improvement Loop
+## Règles
 
-- After ANY correction from the user: update `tasks/lessons.md` with the pattern
-- Write rules for yourself that prevent the same mistake
-- Ruthlessly iterate on these lessons until mistake rate drops
-- Review lessons at session start for relevant project
+- **Contenu dans le HTML.** Le texte et les liens doivent exister dans le HTML
+  servi, jamais injectés en JavaScript : c'est ce que Google indexe. Les liens
+  vers les outils sont de vrais `<a href>`.
+- **Le site fonctionne sans JavaScript.** `main.js` n'ajoute que le choix du
+  thème ; sans lui, le site suit le thème du système.
+- **Voix.** NxtAIGen est le travail d'une seule personne. Ne jamais écrire
+  « studio », « équipe » ou « nous » pour parler de qui construit les outils.
+  Le titre de section « Nos outils » est voulu.
+- **Honnêteté.** Un outil archivé est présenté comme archivé. Un outil qui
+  n'est plus en ligne est retiré de la page.
+- **Images.** Uniquement de vraies captures d'écran des sites ou des
+  applications, sans filigrane. Toujours `width`, `height`, `alt` descriptif et
+  `srcset` 800w/1600w.
+- **Accessibilité.** Contraste AA dans les deux thèmes, focus visible, zones
+  cliquables d'au moins 40 px, `prefers-reduced-motion` respecté.
 
-### 4. Verification Before Done
+## Ajouter ou retirer un outil
 
-- Never mark a task complete without proving it works
-- Diff behavior between main and your changes when relevant
-- Ask yourself: "Would a staff engineer approve this?"
-- Run tests, check logs, demonstrate correctness
+Mettre à jour, dans `site/index.html` : le sommaire du hero, la fiche dans
+`#outils`, le pied de page et la liste JSON-LD (`ItemList`). Mettre à jour
+`lastmod` dans `site/sitemap.xml`. Le sous-domaine de l'outil doit avoir un
+lien retour vers `https://nxtaigen.com/`.
 
-### 5. Demand Elegance (Balanced)
+## SEO
 
-- For non-trivial changes: pause and ask "is there a more elegant way?"
-- If a fix feels hacky: "Knowing everything I know now, implement the elegant solution"
-- Skip this for simple, obvious fixes — don't over-engineer
-- Challenge your own work before presenting it
-
-### 6. Autonomous Bug Fixing
-
-- When given a bug report: just fix it. Don't ask for hand-holding
-- Point at logs, errors, failing tests — then resolve them
-- Zero context switching required from the user
-- Go fix failing CI tests without being told how
-
-## Task Management
-
-1. **Plan First**: Write plan to `tasks/todo.md` with checkable items
-2. **Verify Plan**: Check in before starting implementation
-3. **Track Progress**: Mark items complete as you go
-4. **Explain Changes**: High-level summary at each step
-5. **Document Results**: Add review section to `tasks/todo.md`
-6. **Capture Lessons**: Update `tasks/lessons.md` after corrections
-
-## Core Principles
-
-- **Simplicity First**: Make every change as simple as possible. Impact minimal code.
-- **No Laziness**: Find root causes. No temporary fixes. Senior developer standards.
-- **Minimal Impact**: Changes should only touch what's necessary. Avoid introducing bugs.
+- Canonical : `https://nxtaigen.com/` (avec la barre oblique finale).
+- Changer `lastmod` dans `site/sitemap.xml` à chaque modification du contenu.

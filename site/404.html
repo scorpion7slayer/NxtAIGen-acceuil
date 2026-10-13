@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Page introuvable — NxtAIGen</title>
+    <meta name="robots" content="noindex">
+    <meta name="color-scheme" content="light dark">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/logo.svg" type="image/svg+xml">
+    <script>
+      try {
+        const theme = localStorage.getItem("theme");
+        if (theme === "light" || theme === "dark") {
+          document.documentElement.dataset.theme = theme;
+        }
+      } catch {}
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..800&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    >
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap site-header__inner">
+        <a class="brand" href="/" aria-label="NxtAIGen, accueil">
+          <img src="/logo.svg" alt="" width="28" height="28">
+          <span>NxtAIGen</span>
+        </a>
+      </div>
+    </header>
+    <main class="wrap notfound">
+      <p class="kicker">Erreur 404</p>
+      <h1>Cette page n'existe pas.</h1>
+      <p>
+        L'adresse a peut-être changé. Revenez à l'accueil ou ouvrez directement
+        l'un des outils.
+      </p>
+      <div class="actions">
+        <a class="button button--primary" href="/">Retour à l'accueil</a>
+        <a class="button" href="https://benchsift.nxtaigen.com/">BenchSift</a>
+        <a class="button" href="https://nxtupdate.nxtaigen.com/">NxtUpdate</a>
+      </div>
+    </main>
+  </body>
+</html>
