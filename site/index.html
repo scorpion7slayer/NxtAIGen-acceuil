@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NxtAIGen — outils open source&nbsp;: BenchSift, NxtUpdate, NxtGit</title>
+    <meta
+      name="description"
+      content="Outils open source d'un développeur indépendant&nbsp;: BenchSift compare les modèles d'IA, NxtUpdate met à jour vos paquets sur macOS, NxtGit explore GitHub."
+    >
+    <link rel="canonical" href="https://nxtaigen.com/">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#f3f1ea" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#12110e" media="(prefers-color-scheme: dark)">
+
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:site_name" content="NxtAIGen">
+    <meta property="og:url" content="https://nxtaigen.com/">
+    <meta property="og:title" content="NxtAIGen — outils open source pour développeurs">
+    <meta
+      property="og:description"
+      content="BenchSift, NxtUpdate, NxtGit&nbsp;: des outils open source conçus et publiés par un développeur indépendant."
+    >
+    <meta name="twitter:card" content="summary">
+
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/logo.svg" type="image/svg+xml">
+
+    <script>
+      try {
+        const theme = localStorage.getItem("theme");
+        if (theme === "light" || theme === "dark") {
+          document.documentElement.dataset.theme = theme;
+        }
+      } catch {}
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..800&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    >
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/main.js" defer></script>
+    <script src="https://rybbit.nxtaigen.com/api/script.js" data-site-id="ae2c3c3258dd" defer></script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://nxtaigen.com/#website",
+            "url": "https://nxtaigen.com/",
+            "name": "NxtAIGen",
+            "inLanguage": "fr",
+            "publisher": { "@id": "https://theo.nxtaigen.com/#person" }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://theo.nxtaigen.com/#person",
+            "name": "Théo",
+            "url": "https://theo.nxtaigen.com/",
+            "sameAs": ["https://github.com/scorpion7slayer"]
+          },
+          {
+            "@type": "ItemList",
+            "name": "Nos outils",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "BenchSift", "url": "https://benchsift.nxtaigen.com/" },
+              { "@type": "ListItem", "position": 2, "name": "NxtUpdate", "url": "https://nxtupdate.nxtaigen.com/" },
+              { "@type": "ListItem", "position": 3, "name": "NxtGit", "url": "https://nxtgit.nxtaigen.com/" },
+              { "@type": "ListItem", "position": 4, "name": "Portfolio de Théo", "url": "https://theo.nxtaigen.com/" }
+            ]
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <header class="site-header">
+      <div class="wrap site-header__inner">
+        <a class="brand" href="/" aria-label="NxtAIGen, accueil">
+          <img src="/logo.svg" alt="" width="28" height="28">
+          <span>NxtAIGen</span>
+        </a>
+        <nav class="site-nav" aria-label="Navigation principale">
+          <a href="#outils">Outils</a>
+          <a href="#a-propos">À propos</a>
+          <a href="https://github.com/scorpion7slayer" rel="me">GitHub</a>
+        </nav>
+        <button class="theme-toggle" type="button" hidden aria-label="Changer de thème">
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5Z" />
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="contenu">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="wrap hero__grid">
+          <div class="hero__copy">
+            <p class="kicker">Open source · développeur indépendant</p>
+            <h1 id="hero-title">Des outils open source pour développeurs.</h1>
+            <p class="lead">
+              NxtAIGen rassemble les projets que je conçois, code et publie
+              seul&nbsp;: un comparateur de modèles d'IA, un outil qui met à jour
+              tout un Mac en une commande, un client GitHub de bureau et mon
+              portfolio. Chaque outil a son propre site et son code est public.
+            </p>
+            <div class="actions">
+              <a class="button button--primary" href="#outils">Voir les outils</a>
+              <a class="button" href="https://github.com/scorpion7slayer">Code sur GitHub</a>
+            </div>
+          </div>
+
+          <nav class="index" aria-labelledby="index-title">
+            <h2 class="index__title" id="index-title">Sommaire</h2>
+            <ol class="index__list">
+              <li>
+                <a class="index__row" href="https://benchsift.nxtaigen.com/">
+                  <span class="index__num">01</span>
+                  <span class="index__name">BenchSift</span>
+                  <span class="index__what">Comparer les modèles d'IA</span>
+                  <span class="index__domain">benchsift.nxtaigen.com</span>
+                </a>
+              </li>
+              <li>
+                <a class="index__row" href="https://nxtupdate.nxtaigen.com/">
+                  <span class="index__num">02</span>
+                  <span class="index__name">NxtUpdate</span>
+                  <span class="index__what">Tout mettre à jour sur macOS</span>
+                  <span class="index__domain">nxtupdate.nxtaigen.com</span>
+                </a>
+              </li>
+              <li>
+                <a class="index__row" href="https://nxtgit.nxtaigen.com/">
+                  <span class="index__num">03</span>
+                  <span class="index__name">NxtGit</span>
+                  <span class="index__what">Client GitHub de bureau, archivé</span>
+                  <span class="index__domain">nxtgit.nxtaigen.com</span>
+                </a>
+              </li>
+              <li>
+                <a class="index__row" href="https://theo.nxtaigen.com/">
+                  <span class="index__num">04</span>
+                  <span class="index__name">Portfolio</span>
+                  <span class="index__what">Le développeur derrière NxtAIGen</span>
+                  <span class="index__domain">theo.nxtaigen.com</span>
+                </a>
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </section>
+
+      <section class="tools" id="outils" aria-labelledby="outils-title">
+        <div class="wrap">
+          <header class="section-head">
+            <h2 id="outils-title">Nos outils</h2>
+            <p>
+              Quatre sites, quatre usages. Chaque fiche décrit ce que fait
+              l'outil, montre une capture réelle et renvoie vers son site et
+              son code source.
+            </p>
+          </header>
+
+          <article class="tool" id="benchsift" aria-labelledby="benchsift-title">
+            <div class="tool__body">
+              <h3 id="benchsift-title">
+                <a href="https://benchsift.nxtaigen.com/">BenchSift</a>
+              </h3>
+              <p class="tool__desc">
+                BenchSift compare plus d'un millier de modèles d'IA selon leurs
+                scores de benchmarks, leur prix et leur vitesse de génération.
+                Vous pouvez les classer par code, mathématiques, vitesse, prix
+                ou cybersécurité, puis en comparer plusieurs côte à côte. Les
+                sources des données sont indiquées, pour choisir un modèle sur
+                des chiffres vérifiables plutôt que sur des annonces.
+              </p>
+              <a class="visit" href="https://benchsift.nxtaigen.com/">Ouvrir benchsift.nxtaigen.com</a>
+              <figure class="shot">
+                <img
+                  src="/screenshots/benchsift-1600.webp"
+                  srcset="/screenshots/benchsift-800.webp 800w, /screenshots/benchsift-1600.webp 1600w"
+                  sizes="(min-width: 1100px) 860px, 100vw"
+                  width="1600"
+                  height="1000"
+                  loading="lazy"
+                  decoding="async"
+                  alt="Page d'accueil de BenchSift&nbsp;: classement des modèles d'IA avec scores, prix, vitesse et taille de contexte."
+                >
+                <figcaption>Capture d'écran — benchsift.nxtaigen.com</figcaption>
+              </figure>
+            </div>
+            <div class="tool__meta">
+              <p class="tool__num">01</p>
+              <p class="status status--live">En ligne</p>
+              <dl class="facts">
+                <dt>Catégorie</dt>
+                <dd>Catalogue de modèles d'IA</dd>
+                <dt>Technologies</dt>
+                <dd>TanStack Start, TypeScript</dd>
+                <dt>Code</dt>
+                <dd><a href="https://github.com/scorpion7slayer/benchsift">scorpion7slayer/benchsift</a></dd>
+              </dl>
+            </div>
+          </article>
+
+          <article class="tool" id="nxtupdate" aria-labelledby="nxtupdate-title">
+            <div class="tool__body">
+              <h3 id="nxtupdate-title">
+                <a href="https://nxtupdate.nxtaigen.com/">NxtUpdate</a>
+              </h3>
+              <p class="tool__desc">
+                NxtUpdate détecte les gestionnaires de paquets installés sur
+                votre Mac — Homebrew, npm, pnpm, Yarn, Bun, pip et Cargo — ainsi
+                que les mises à jour système de macOS. Une seule commande liste
+                ce qui est obsolète et met tout à jour, depuis une interface
+                dans le terminal ou en mode script. Un mode simulation montre ce
+                qui changerait avant d'installer quoi que ce soit.
+              </p>
+              <a class="visit" href="https://nxtupdate.nxtaigen.com/">Ouvrir nxtupdate.nxtaigen.com</a>
+              <figure class="shot">
+                <img
+                  src="/screenshots/nxtupdate-1600.webp"
+                  srcset="/screenshots/nxtupdate-800.webp 800w, /screenshots/nxtupdate-1600.webp 1600w"
+                  sizes="(min-width: 1100px) 860px, 100vw"
+                  width="1600"
+                  height="1000"
+                  loading="lazy"
+                  decoding="async"
+                  alt="Site de NxtUpdate&nbsp;: présentation de l'outil et commandes d'installation avec npm et Bun."
+                >
+                <figcaption>Capture d'écran — nxtupdate.nxtaigen.com</figcaption>
+              </figure>
+            </div>
+            <div class="tool__meta">
+              <p class="tool__num">02</p>
+              <p class="status status--live">En ligne</p>
+              <dl class="facts">
+                <dt>Catégorie</dt>
+                <dd>Outil en ligne de commande, macOS</dd>
+                <dt>Technologies</dt>
+                <dd>TypeScript, Bun</dd>
+                <dt>Installation</dt>
+                <dd><code>npm install -g nxtupdate</code></dd>
+                <dt>Code</dt>
+                <dd><a href="https://github.com/scorpion7slayer/NxtUpdate">scorpion7slayer/NxtUpdate</a></dd>
+              </dl>
+            </div>
+          </article>
+
+          <article class="tool" id="nxtgit" aria-labelledby="nxtgit-title">
+            <div class="tool__body">
+              <h3 id="nxtgit-title">
+                <a href="https://nxtgit.nxtaigen.com/">NxtGit</a>
+              </h3>
+              <p class="tool__desc">
+                NxtGit est un client GitHub de bureau pour macOS et Windows,
+                construit avec Tauri, React et Rust. Il réunit dans une seule
+                fenêtre vos dépôts, issues et pull requests, la relecture de
+                code et un assistant IA compatible avec plusieurs fournisseurs.
+                Le projet est archivé&nbsp;: il ne reçoit plus de mises à jour, mais
+                son code et ses dernières versions restent disponibles.
+              </p>
+              <a class="visit" href="https://nxtgit.nxtaigen.com/">Ouvrir nxtgit.nxtaigen.com</a>
+              <figure class="shot">
+                <img
+                  src="/screenshots/nxtgit-1600.webp"
+                  srcset="/screenshots/nxtgit-800.webp 800w, /screenshots/nxtgit-1600.webp 1600w"
+                  sizes="(min-width: 1100px) 860px, 100vw"
+                  width="1600"
+                  height="1000"
+                  loading="lazy"
+                  decoding="async"
+                  alt="Application NxtGit&nbsp;: tableau de bord avec la liste des dépôts, issues, pull requests et l'activité récente."
+                >
+                <figcaption>Capture d'écran — application NxtGit sur macOS</figcaption>
+              </figure>
+            </div>
+            <div class="tool__meta">
+              <p class="tool__num">03</p>
+              <p class="status status--archived">Archivé</p>
+              <dl class="facts">
+                <dt>Catégorie</dt>
+                <dd>Client GitHub, macOS et Windows</dd>
+                <dt>Technologies</dt>
+                <dd>Tauri, React, Rust</dd>
+                <dt>Code</dt>
+                <dd><a href="https://github.com/scorpion7slayer/NxtGit">scorpion7slayer/NxtGit</a></dd>
+              </dl>
+            </div>
+          </article>
+
+          <article class="tool" id="portfolio" aria-labelledby="portfolio-title">
+            <div class="tool__body">
+              <h3 id="portfolio-title">
+                <a href="https://theo.nxtaigen.com/">Portfolio de Théo</a>
+              </h3>
+              <p class="tool__desc">
+                Mon site personnel, où je présente mon parcours de développeur
+                web, les langages et les outils que j'utilise au quotidien. On y
+                trouve aussi tous mes projets, y compris ceux qui ne sont pas
+                publiés sous NxtAIGen. C'est le meilleur endroit pour me
+                contacter.
+              </p>
+              <a class="visit" href="https://theo.nxtaigen.com/">Ouvrir theo.nxtaigen.com</a>
+              <figure class="shot">
+                <img
+                  src="/screenshots/theo-1600.webp"
+                  srcset="/screenshots/theo-800.webp 800w, /screenshots/theo-1600.webp 1600w"
+                  sizes="(min-width: 1100px) 860px, 100vw"
+                  width="1600"
+                  height="1000"
+                  loading="lazy"
+                  decoding="async"
+                  alt="Page d'accueil du portfolio de Théo&nbsp;: titre «&nbsp;Développeur Web&nbsp;», liens vers les projets et le contact."
+                >
+                <figcaption>Capture d'écran — theo.nxtaigen.com</figcaption>
+              </figure>
+            </div>
+            <div class="tool__meta">
+              <p class="tool__num">04</p>
+              <p class="status status--live">En ligne</p>
+              <dl class="facts">
+                <dt>Catégorie</dt>
+                <dd>Site personnel</dd>
+                <dt>Technologies</dt>
+                <dd>HTML, CSS, JavaScript</dd>
+                <dt>Code</dt>
+                <dd><a href="https://github.com/scorpion7slayer/portfolio">scorpion7slayer/portfolio</a></dd>
+              </dl>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="about" id="a-propos" aria-labelledby="a-propos-title">
+        <div class="wrap about__grid">
+          <h2 id="a-propos-title">Une personne, tout en public.</h2>
+          <div class="about__text">
+            <p>
+              Je m'appelle Théo et je suis développeur web en Belgique.
+              NxtAIGen est le nom sous lequel je publie mes outils&nbsp;: je les
+              conçois, je les code et je les maintiens seul.
+            </p>
+            <p>
+              Le code de chaque projet est ouvert sur GitHub. Quand un outil
+              n'est plus maintenu, je l'indique clairement, comme pour NxtGit,
+              plutôt que de le laisser vieillir en silence.
+            </p>
+            <div class="actions">
+              <a class="button" href="https://theo.nxtaigen.com/">Voir mon portfolio</a>
+              <a class="button" href="https://github.com/scorpion7slayer" rel="me">Profil GitHub</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap site-footer__grid">
+        <div class="site-footer__brand">
+          <a class="brand" href="/">
+            <img src="/logo.svg" alt="" width="28" height="28">
+            <span>NxtAIGen</span>
+          </a>
+          <p>Outils open source conçus et publiés par un développeur indépendant.</p>
+        </div>
+
+        <nav aria-labelledby="footer-tools">
+          <h2 class="site-footer__title" id="footer-tools">Outils</h2>
+          <ul>
+            <li><a href="https://benchsift.nxtaigen.com/">BenchSift</a></li>
+            <li><a href="https://nxtupdate.nxtaigen.com/">NxtUpdate</a></li>
+            <li><a href="https://nxtgit.nxtaigen.com/">NxtGit</a></li>
+            <li><a href="https://theo.nxtaigen.com/">Portfolio de Théo</a></li>
+          </ul>
+        </nav>
+
+        <nav aria-labelledby="footer-code">
+          <h2 class="site-footer__title" id="footer-code">Code source</h2>
+          <ul>
+            <li><a href="https://github.com/scorpion7slayer/benchsift">BenchSift sur GitHub</a></li>
+            <li><a href="https://github.com/scorpion7slayer/NxtUpdate">NxtUpdate sur GitHub</a></li>
+            <li><a href="https://github.com/scorpion7slayer/NxtGit">NxtGit sur GitHub</a></li>
+            <li><a href="https://github.com/scorpion7slayer">Tous les dépôts</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="wrap site-footer__bottom">
+        <p>© 2026 NxtAIGen</p>
+        <a class="cloudflare" href="https://www.cloudflare.com/">
+          Hébergé sur
+          <img src="/cloudflare.svg" alt="" width="20" height="20">
+          <span>Cloudflare</span>
+        </a>
+      </div>
+    </footer>
+  </body>
+</html>
